@@ -1,0 +1,92 @@
+**// =============================================================//
+*// Some useful information not directly connected with WikiFarm //*
+// ============================================================ //**
+
+1. API
+2. Variables
+3. Constants
+4. Database
+5. Wiki format
+
+//-------------------------------------------------
+//------- 1. API
+//-------------------------------------------------
+
+PHP:
+	* http://ru2.php.net/manual/ru/		- PHP manual in Russian,
+	* http://www.php.net 				- PHP manual in English
+
+MediaWiki:
+	* http://www.mediawiki.org/wiki/Manual:Special_pages
+	* https://www.mediawiki.org/wiki/Extension:ReplaceText
+
+Recentchanges:
+	* http://www.mediawiki.org/wiki/API:Recentchanges
+	* Recent changes special page can be transcluded: {{Special:RecentChanges/days=5,limit=40}}
+
+Pages:
+	* http://www.mediawiki.org/wiki/API:Allpages
+
+
+* http://www.mediawiki.org/wiki/API:Data_formats
+* Llist of extentions:
+	?action=query&meta=siteinfo&siprop=extensions
+
+
+//-------------------------------------------------
+//------- 2. Variables
+//-------------------------------------------------
+If user can access this page:
+$str = wfMsg( $wgUser->isAllowed( 'wikifarm' ) ? 'wikifarm' : 'wikifarm_title' );
+
+
+//-------------------------------------------------
+//------- 3. Constants
+//-------------------------------------------------
+# ----- Namespace IDs ----- #
+define('NAMESPACE_ID_MEDIA', -2);
+define('NAMESPACE_ID_SPECIAL', -1);
+define('NAMESPACE_ID_MAIN', 0);
+define('NAMESPACE_ID_MAINTALK', 1);
+define('NAMESPACE_ID_USER', 2);
+define('NAMESPACE_ID_USERTALK', 3);
+define('NAMESPACE_ID_WIKI', 4);  // the wiki name - Wikipedia, or whatever
+define('NAMESPACE_ID_WIKITALK', 5);
+define('NAMESPACE_ID_FILE', 6);
+define('NAMESPACE_ID_FILETALK', 7);
+define('NAMESPACE_ID_MEDIAWIKI', 8);
+define('NAMESPACE_ID_MEDIAWIKITALK', 9);
+define('NAMESPACE_ID_TEMPLATE', 10);
+define('NAMESPACE_ID_TEMPLATETALK', 11);
+define('NAMESPACE_ID_HELP', 12);
+define('NAMESPACE_ID_HELPTALK', 13);
+define('NAMESPACE_ID_CATEGORY', 14);
+define('NAMESPACE_ID_CATEGORYTALK', 15);
+
+
+//-------------------------------------------------
+//------- 4. Database
+//-------------------------------------------------
+* For more info on DB functions see
+includes/db/LoadBalancer.php
+	function reallyOpenConnection( $server, $dbNameOverride = false ) {
+includes/db/Database.php
+	public final static function factory( $dbType, $p = array() ) {
+
+* http://svn.wikimedia.org/doc/classDatabaseBase.html
+
+
+
+//-------------------------------------------------
+//------- 5. Wiki format
+//-------------------------------------------------
+* Some useful wiki code:
+<span style="color: grey;"></span>
+<span style="color:#777777" class="plainlinks"></span>
+&nbsp;
+{| class="wikitable sortable"
+| rowspan=2 |
+| colspan=2 |
+
+MediaWiki > 1.8
+<div class="mw-collapsible mw-collapsed" style="width:600px">Text to show<div class="mw-collapsible-content">Text to hide</div></div>

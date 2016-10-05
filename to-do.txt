@@ -1,0 +1,83 @@
+General
+-------
+
+* $str_wikifarm_links --> function wfarmHeader()
+** в прав угол время создания страницы (отчёта)
+
+* $str_wikifarm_footer --> function wfarmFooter()
+** в прав угол название модуля и его версия
+
+
+* Add page title	'wikifarm_title' => 'Управление вики фермой',
+  see WikiFarm_body.php for function getDescription()
+
+* Set extention alias to avoid an error in debug log:
+  Did not find alias for special page 'WikiFarmPages'. Perhaps no aliases are defined for it? [Called from SpecialPage::getTitleFor in /var/www/w/includes/SpecialPage.php at line 272]
+
+* Модули подключать в LocalSettings.php
+** На начальной странице не показывать неподключенные модули
+** Строка: "подключено модулей: 3, неподключено: 2".
+** Опционально скрывать панели инструментов, чтобы в пользовательских вики не видеть ссылок на другие инструменты.
+
+WikiFarm (main)
+-------------
+/*Future feature: enable new rights (must be)
+// New user right, required to modify the wikifarm table through Special:wikifarm
+$wgAvailableRights[] = 'wikifarm';
+*/
+
+/*Future feature: enable log (do we need it ?)
+// Set up the new log type - wikifarm actions are logged to this new log
+$wgLogTypes[] = 'wikifarm';
+$wgLogNames['wikifarm'] = 'wikifarm_logpagename';
+$wgLogHeaders['wikifarm'] = 'wikifarm_logpagetext';
+$wgLogActions['wikifarm/wikifarm'] = 'wikifarm_logentry';
+$wgLogActions['wikifarm/iw_add'] = 'wikifarm_log_added';
+$wgLogActions['wikifarm/iw_delete'] = 'wikifarm_log_deleted';
+$wgLogActions['wikifarm/iw_edit'] = 'wikifarm_log_edited';
+*/
+
+WikiFarmSearch
+-------------
+* add spin box for query limit
+* $wiki->changes  --> $wiki->counters[0] --> $wiki->arr[] $wiki->arr['pages'] --> уменьшить кол-во переменных
+* bot увеличить кол-во запрашиваемых записей (сделать поле в форме)
+* Подсвечивать слова поиска в snippet
+
+WikiFarmPages
+-------------
+/* $farmPages = array( 0 => array (
+					'pageid' => 1,
+					'ns' => 0,
+					'title' => '',
+					'links' => ''
+					'counter'=> 0),	 );
+	TODO: Make a table in database for that array and update it periodicly, since this function would be slow on large wikis.
+	TODO: Sort $farmPages
+	FIXME: takes only first 100 pages. Need to take all or add "next/prev page" navigation
+*/
+
+
+WikiFarmUsers
+-------------
+* radiobutton: list all (blocked, most active) users
+* list user's activity
+* change user password
+* change user rights
+* rename user
+* delete (?) user
+* show Журнал прав участника (user right log)
+
+
+WikiFarmImages
+--------------
+// Reflect global usage of images in a wiki farm with shared image repository
+// For wiki on one server see:  https://www.mediawiki.org/wiki/Extension:GlobalUsage
+$wgHooks['ImagePageAfterImageLinks'][] =
+$wgHooks['ImagePageShowTOC'][] =
+
+
+Bot
+---
+* получить список файлов
+

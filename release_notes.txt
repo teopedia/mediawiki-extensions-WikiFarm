@@ -1,0 +1,65 @@
+WikiFarm is an extension for MediaWiki
+
+http://www.mediawiki.org/wiki/Extension:WikiFarm
+
+Legend:
+* '''+''' - added
+* '''-''' - removed
+* '''=''' - changed
+* '''%''' - fixed
+
+
+Release notes:
+
+v2.3   2012.10.
+* % fixed DateTime format. Now it does not depend on PHP version. It used PHP >= 5.3 function: date_create_from_format()
+* = complete code revision. Some changes to make it clean and nice.
+* = header and footer are now the functions (they were strings) and show date and time. Header shows only active modules.
+* = WikiFarm start page now checks for included modules and dims disabled ones.
+* - WikiFarmSearch: 
+
+v2.2   2012.10.07
+* + WikiFarmSearch - NEW MODULE. Search text in all wikis
+* = WikiFarmPages: data in table now (it was in list)
+* = WikiFarmChanges: links use interwiki now
+* = WikiFarmStatistics: no direct MySQL queries used any more, only API
+
+
+v2.1   2012.08.23
+* + WikiFarmUsers - NEW MODULE. Statistics and actions for users.
+* + WikiFarmLinks - NEW MODULE. A list of administrative links for every wiki.
+* + some functions in botclasses.php to get more info via API
+* = fixed localized aliases for modules (special pages)
+
+
+v2.0   2012.02.18
+
+* The power of MediaWiki API was realized and code of all modules had to be rewrited. So most everything is new in WikiFarm v2.0. Something I want to highlight:
+
+* + WikiFarmStatistics - NEW MODULE. Statistics is moved to this module.
+* + WikiFarmLog - NEW MODULE. It is for bots to write their logs.
+* + configuration file. All configuration parameters moved to WikiFarm_config.php
+
+
+* WikiFarm before 2.0 has some prerequisites. It assumes that all wikis in a farm:
+** are on one server and available for one and the same db user
+** have the same prefix delimeter "__" for their tables (there is a script in Additional tools directory to help with that)
+
+
+v1.1   2011.08.25
+
+    = fixed problem with several db with [all] parameter
+    = moved statistics on db and prefix info to higher level, so it's not visible by default
+
+v1.0   2011.08.24
+
+    + WikiFarmPages - shows all articles in the project from all wikis
+    + Additional Tools - script for batch MySQL tables rename. It has it's page: MySQL tables rename
+    + some minor updates
+
+v0.9   2011.07.07
+	first release
+    Modules:
+        Main - project statistics
+        WikiFarmChanges - shows changes in all wikis
+
