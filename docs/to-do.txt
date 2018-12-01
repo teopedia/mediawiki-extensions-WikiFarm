@@ -1,0 +1,235 @@
+https://sandbox.sysadminwiki.ru/wiki/Служебная:WikiFarm
+Нужно использовать из extension.json
+https://www.mediawiki.org/wiki/Manual:Configuration_for_developers
+
+Продолжить изучение: 
+https://www.mediawiki.org/wiki/How_to_become_a_MediaWiki_hacker/Extension_Writing_Tutorial
+https://www.mediawiki.org/wiki/Manual:Special_pages/ru
+
+
+* Продолжить с отображения ссылок из модуля Links
+https://sandbox.sysadminwiki.ru/wiki/Служебная:WikiFarm/Links
+Наполнить массив $wikis
+
+
+* HTMLForm is a class for handling everything related to user interface forms
+https://www.mediawiki.org/wiki/HTMLForm
+
+
+================================================================================
+=== Current works to do
+-----------------------
+
+* Create Special page group (Special:SpecialPages) for all special pages in WikiFarm
+https://www.mediawiki.org/wiki/Manual:Special_pages/ru#Special_page_group
+
+
+* Update extension.json:
+    "SpecialPages": {
+        "WikiFarm": "SpecialWikiFarm",
+        "WikiFarmStatistics": "WikiFarmStatistics",
+        "WikiFarmChanges": "WikiFarmChanges",
+        "WikiFarmPages": "WikiFarmPages",
+        "WikiFarmUsers": "WikiFarmUsers",
+        "WikiFarmLinks": "WikiFarmLinks",
+        "WikiFarmSearch": "WikiFarmSearch"
+    },
+    "AutoloadClasses": {
+        "SpecialWikiFarm": "includes/SpecialWikiFarm.php",
+        "WikiFarmStatistics": "WikiFarmStatistics/WikiFarmStatistics_body.php",
+        "WikiFarmChanges": "WikiFarmChanges/WikiFarmChanges_body.php",
+        "WikiFarmPages": "WikiFarmPages/WikiFarmPages_body.php",
+        "WikiFarmUsers": "WikiFarmUsers/WikiFarmUsers_body.php",
+        "WikiFarmLinks": "WikiFarmLinks/WikiFarmLinks_body.php",
+        "WikiFarmSearch": "WikiFarmSearch/WikiFarmSearch_body.php"
+    },
+    "ExtensionMessagesFiles": {
+        "WikiFarm": "WikiFarm.i18n.php",
+        "WikiFarmStatistics": "WikiFarmStatistics/WikiFarmStatistics.i18n.php",
+        "WikiFarmChanges": "WikiFarmChanges/WikiFarmChanges.i18n.php",
+        "WikiFarmPages": "WikiFarmPages/WikiFarmPages.i18n.php",
+        "WikiFarmUsers": "WikiFarmUsers/WikiFarmUsers.i18n.php",
+        "WikiFarmLinks": "WikiFarmLinks/WikiFarmLinks.i18n.php",
+        "WikiFarmSearch": "WikiFarmSearch/WikiFarmSearch.i18n.php"
+    },
+
+* Write changes to site log: https://www.mediawiki.org/wiki/Manual:Logging_to_Special:Log
+
+* Create additional access right and group for WikiFarm. Now: the access restricted to sysops.
+https://www.mediawiki.org/wiki/Manual:Special_pages/ru#Restricting_page_access
+
+* Работа с БД:
+https://www.mediawiki.org/wiki/Manual:Database_access
+https://www.mediawiki.org/wiki/SQL_injection
+
+* Регистрация (оповещение) своих таблиц БД, чтобы не было конфликтов с другими расширениями
+https://www.mediawiki.org/wiki/Database_field_prefixes/ru
+https://www.mediawiki.org/wiki/Manual:Developing_extensions#Adding_database_tables
+
+
+================================================================================
+=== Notes on upgrading extension from MW 1.16 to 1.31
+-----------------------------------------------------
+* Скрипт для создания конф файла extension.json из старого расширения для нового:
+php maintenance/convertExtensionToRegistration.php extensions/MilestoneProposals/MilestoneProposals.php
+
+* https://www.mediawiki.org/wiki/Manual:Messages_API#Help_with_replacing_deprecated_wfMsg*_functions
+wfMsg( 'key' )                  --> wfMessage( 'key' )->text()
+
+wfMsgHtml( 'key' )              --> wfMessage( 'key' )->escaped()
+wfMsgHtml( 'key', 'apple' )     --> wfMessage( 'key' )->rawParams( 'apple' )->escaped()
+
+$wgOut->addWikiText( 'text' )   --> $this->getOutput()->addWikiText( 'text' );
+or
+$output = $this->getOutput();
+$output->addWikiText( 'text' );
+
+
+Changes in code:
+    replace all Xml:: functions with their Html:: equivalents, which make it easier to do the right thing
+    where possible, avoid globals and use msg()
+    replace htmlspecialchars() with ->escaped() where appropriate
+
+
+================================================================================
+=== OLD notes for v.2.3, before upgrade in 2018.11.16
+-----------------------------------------------------
+
+* $str_wikifarm_links --> function wfarmHeader()
+** в прав угол время создания страницы (отчёта)
+
+* $str_wikifarm_footer --> function wfarmFooter()
+** в прав угол название модуля и его версия
+
+
+* Add page title	'wikifarm_title' => 'Управление вики фермой',
+  see WikiFarm_body.php for function getDescription()
+
+* Set extention alias to avoid an error in debug log:
+  Did not find alias for special page 'WikiFarmPages'. Perhaps no aliases are defined for it? [Called from SpecialPage::getTitleFor in /var/www/w/includes/SpecialPage.php at line 272]
+
+* Модули подключать в LocalSettings.php
+** На начальной странице не показывать неподключенные модули
+** Строка: "подключено модулей: 3, неподключено: 2".
+** Опционально скрывать панели инструментов, чтобы в пользовательских вики не видеть ссылок на другие инструменты.
+
+WikiFarm (main)
+-------------
+/*Future feature: enable new rights (must be)
+// New user right, required to modify the wikifarm table through Special:wikifarm
+$wgAvailableRights[] = 'wikifarm';
+*/
+
+/*Future feature: enable log (do we need it ?)
+// Set up the new log type - wikifarm actions are logged to this new log
+$wgLogTypes[] = 'wikifarm';
+$wgLogNames['wikifarm'] = 'wikifarm_logpagename';
+$wgLogHeaders['wikifarm'] = 'wikifarm_logpagetext';
+$wgLogActions['wikifarm/wikifarm'] = 'wikifarm_logentry';
+$wgLogActions['wikifarm/iw_add'] = 'wikifarm_log_added';
+$wgLogActions['wikifarm/iw_delete'] = 'wikifarm_log_deleted';
+$wgLogActions['wikifarm/iw_edit'] = 'wikifarm_log_edited';
+*/
+
+WikiFarmSearch
+-------------
+* add spin box for query limit
+* $wiki->changes  --> $wiki->counters[0] --> $wiki->arr[] $wiki->arr['pages'] --> уменьшить кол-во переменных
+* bot увеличить кол-во запрашиваемых записей (сделать поле в форме)
+* Подсвечивать слова поиска в snippet
+
+WikiFarmPages
+-------------
+/* $farmPages = array( 0 => array (
+					'pageid' => 1,
+					'ns' => 0,
+					'title' => '',
+					'links' => ''
+					'counter'=> 0),	 );
+	TODO: Make a table in database for that array and update it periodicly, since this function would be slow on large wikis.
+	TODO: Sort $farmPages
+	FIXME: takes only first 100 pages. Need to take all or add "next/prev page" navigation
+*/
+
+
+WikiFarmUsers
+-------------
+* radiobutton: list all (blocked, most active) users
+* list user's activity
+* change user password
+* change user rights
+* rename user
+* delete (?) user
+* show Журнал прав участника (user right log)
+
+
+WikiFarmImages
+--------------
+// Reflect global usage of images in a wiki farm with shared image repository
+// For wiki on one server see:  https://www.mediawiki.org/wiki/Extension:GlobalUsage
+$wgHooks['ImagePageAfterImageLinks'][] =
+$wgHooks['ImagePageShowTOC'][] =
+
+
+Bot
+---
+* получить список файлов
+
+================================================================================
+=== OLD part of function wfarmDefineWikis() in SpecialWikiFarm.php
+-----------------------
+// in loop
+//  foreach ($wikis as $wiki_index => $wiki) {
+
+            /*
+            $db_connection = mysqli_connect($wiki->db['server'], $wiki->db['user'], $wiki->db['password'], $wiki->db['name'])
+                            or die("Could not connect to server: $wiki->db['server']");
+            try {
+                mysqli_select_db($db_connection, $wiki->db['name'])
+                                or die("Could not select database: $wiki->db['name']");
+                //$tables = mysql_list_tables($wiki->db['name']); // deprecated
+                if ($result = mysqli_query($db_connection, "SHOW TABLES LIKE '%text'")) {
+                    
+                    mysqli_free_result($result);    
+                }
+                if ($infoLevel > 0) { //show basic info about wikis found
+                        $out->addWikiText("Scan '''" . $wiki->db['name'] . "''' database for wikis\n* number of tables: '''" . mysql_num_rows($tables) . "'''");
+                }
+                //find all 'interwiki' tables (can be any table name) and get prefix from table name
+                $wiki_counter = 0;
+                $i = 0;
+                while ($i < mysqli_num_rows($tables)) {
+                    $table_name = mysqli_tablename($tables, $i);
+                    $pos = strpos($table_name, 'interwiki');
+                    if ($pos > 0) {
+                        $t_prefix = substr($table_name, 0, $pos);
+                        //Set wiki name = table_prefix - prefix_delimiter
+                        $wiki->name = substr($t_prefix, 0, mb_strlen($t_prefix) - mb_strlen($prefixDelimiter));
+                        $wiki_url = $wiki->url . "/" . $wiki->name;
+                        $wiki_api = $wiki->api . "/w-" . $wiki->name . "/api.php";
+                        $wikis[] = new wfarmWikiInstance(
+                                                        $wiki_url,
+                                                        $wiki_api,
+                                                        $wiki->db,
+                                                        $t_prefix,
+                                                        $wiki->user,
+                                                        $wiki->pass,
+                                                        $wiki->common_name
+                        );
+                        $wiki_counter++;
+                        $str_debug = $str_debug . "|-\n| " . $wiki_url . " || " . $t_prefix . "\n";
+                    }
+                    $i++;
+                }
+                if ($infoLevel > 0) {
+                    $out->addWikiText("\n* wikis found: '''$wiki_counter'''");
+                }
+                if ($infoLevel > 1) {   //show verbous wikis info
+                    $out->addWikiText($str_debug . "|}");
+                }
+            } catch (Exception $e) {
+                print "<BR/>Exception occured: $e->getMessage()<BR/>";
+                mysqli_close($db_connection);
+            }
+            mysqli_close($db_connection);
+             */

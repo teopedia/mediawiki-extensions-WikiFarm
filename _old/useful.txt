@@ -1,12 +1,12 @@
-**// =============================================================//
-*// Some useful information not directly connected with WikiFarm //*
-// ============================================================ //**
+**// ===========================================================================//
+*// Some useful information for developer not directly connected with WikiFarm //*
+// ========================================================================== //**
 
 1. API
 2. Variables
 3. Constants
 4. Database
-5. Wiki format
+5. Extension developing
 
 //-------------------------------------------------
 //------- 1. API
@@ -14,7 +14,7 @@
 
 PHP:
 	* http://ru2.php.net/manual/ru/		- PHP manual in Russian,
-	* http://www.php.net 				- PHP manual in English
+	* http://www.php.net 			- PHP manual in English
 
 MediaWiki:
 	* http://www.mediawiki.org/wiki/Manual:Special_pages
@@ -78,15 +78,8 @@ includes/db/Database.php
 
 
 //-------------------------------------------------
-//------- 5. Wiki format
+//------- 5. Extension developing
 //-------------------------------------------------
-* Some useful wiki code:
-<span style="color: grey;"></span>
-<span style="color:#777777" class="plainlinks"></span>
-&nbsp;
-{| class="wikitable sortable"
-| rowspan=2 |
-| colspan=2 |
-
-MediaWiki > 1.8
-<div class="mw-collapsible mw-collapsed" style="width:600px">Text to show<div class="mw-collapsible-content">Text to hide</div></div>
+* General info on developing extension:
+ https://www.mediawiki.org/wiki/Manual:Developing_extensions
+    

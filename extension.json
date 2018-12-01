@@ -1,0 +1,66 @@
+{
+    "name": "WikiFarm",
+    "version": "3.0",
+    "author": "Pavel Malahov",
+    "url": "http://www.mediawiki.org/wiki/Extension:WikiFarm",
+    "descriptionmsg": "wikifarm_description",
+    "license-name": "GPL-2.0-or-later",
+    "type": "specialpage",
+    "requires": {
+        "MediaWiki": ">= 1.29.0"
+    },
+    "SpecialPages": {
+        "WikiFarm": "SpecialWikiFarm"
+    },
+    "MessagesDirs": { "WikiFarm": ["i18n"] },
+    "ExtensionMessagesFiles": { "WikiFarm": "i18n/WikiFarm.alias.php" },
+    "AutoloadClasses": {
+        "SpecialWikiFarm": "includes/SpecialWikiFarm.php"
+    },
+    "config": {
+		"WikifarmVersion": {
+			"value": "3.0",
+			"description": "Release version"
+		},
+		"WikifarmBuild": {
+			"value": "2018-11-26",
+			"description": "Build date"
+		},
+		"WikifarmInfoLevel": {
+			"value": 2,
+			"description": "How detailed information should be.  0 - little info,  1 - all usefull info (show $str_info messages) 2 - debug info (show $str_debug messages)"
+		},
+		"WikifarmModuleLinks": {
+			"value": true,
+			"description": "Enable Links module"
+		},
+		"WikifarmModuleStatistics": {
+			"value": false,
+			"description": "Enable Statistics module"
+		},
+		"WikifarmModuleChanges": {
+			"value": false,
+			"description": "Enable Changes module"
+		},
+		"WikifarmModulePages": {
+			"value": false,
+			"description": "Enable Pages module"
+		},
+		"WikifarmModuleUsers": {
+			"value": false,
+			"description": "Enable Users module"
+		},
+		"WikifarmModuleSearch": {
+			"value": false,
+			"description": "Enable Search module"
+		},
+		"WikifarmModuleLog": {
+			"value": false,
+			"description": "Enable Log module"
+		}
+	},
+    "ConfigRegistry": {
+            "wikifarm": "GlobalVarConfig::newInstance"
+    },
+    "manifest_version": 2
+}
