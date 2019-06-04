@@ -1,0 +1,66 @@
+{
+    "name": "WikiFarm",
+    "version": "3-beta",
+    "author": "Pavel Malahov",
+    "url": "http://www.mediawiki.org/wiki/Extension:WikiFarm",
+    "descriptionmsg": "wikifarm_description",
+    "license-name": "GPL-2.0-or-later",
+    "type": "specialpage",
+    "requires": {
+        "MediaWiki": ">= 1.29.0"
+    },
+    "SpecialPages": {
+        "WikiFarm": "SpecialWikiFarm"
+    },
+    "MessagesDirs": { "WikiFarm": ["i18n"] },
+    "ExtensionMessagesFiles": { "WikiFarm": "i18n/WikiFarm.alias.php" },
+    "AutoloadClasses": {
+        "SpecialWikiFarm": "includes/SpecialWikiFarm.php"
+    },
+    "config": {
+		"WikifarmVersion": {
+			"value": "3-beta",
+			"description": "Release version"
+		},
+		"WikifarmBuild": {
+			"value": "2019-06-03",
+			"description": "Build date"
+		},
+		"WikifarmInfoLevel": {
+			"value": 0,
+			"description": "How detailed information should be.  0 - regular info,  1 - all usefull info (show $str_info messages) 2 - debug info (show $str_debug messages)"
+		},
+		"WikifarmWikiListMode": {
+			"value": "file",
+			"description": "Where to store information about wikis. Valid values: memory (make new list every time from WikiFarm_config.php); file (see WikifarmWikiListFile).)"
+		},
+		"WikifarmWikiListFile": {
+			"value": "wikis.json",
+			"description": "Relative file name for list of wikis in JSON format"
+		},
+		"WikifarmCollapseInfo": {
+			"value": false,
+			"description": "Collapse (hide) info box in wiki table on main page"
+		},
+		"WikifarmModuleLinks": {
+			"value": true,
+			"description": "Enable Links module"
+		},
+		"WikifarmModuleStatistics": {
+			"value": true,
+			"description": "Enable Statistics module"
+		},
+		"WikifarmModuleChanges": {
+			"value": true,
+			"description": "Enable Changes module"
+		},
+		"WikifarmModuleUsers": {
+			"value": true,
+			"description": "Enable Users module"
+		}
+	},
+    "ConfigRegistry": {
+            "wikifarm": "GlobalVarConfig::newInstance"
+    },
+    "manifest_version": 2
+}
