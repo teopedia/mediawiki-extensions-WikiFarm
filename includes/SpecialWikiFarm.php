@@ -610,8 +610,8 @@ function ShowPageChanges() {
     }
 	
 	//Подключаем js
-	$script = '<script type="text/javascript" src="/extensions/WikiFarm/includes/js.js"></script>';
-	$out->addHeadItem("itemName", $script);
+	//$script = '<script type="text/javascript" src="/extensions/WikiFarm/includes/js.js"></script>';
+	//$out->addHeadItem("itemName", $script);
 }
 
 /**
