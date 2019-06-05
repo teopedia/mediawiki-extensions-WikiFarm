@@ -48,6 +48,8 @@
     "wikifarm_wiki": "Вики",
     "wikifarm_wiki_list": "Список вики",
     "wikifarm_wiki_name": "Название вики",
+    "wikifarm_wikis_modified": "Изменённые вики",
+    "wikifarm_wikis_not_modified": "Не изменённые вики",
     "wikifarm_words_number": "Кол-во слов",
     "wikifarmlinks": "ВикиФерма. Ссылки",
     "wikifarmlinks_description": "ВикиФерма. [[Special:WikiFarmLinks|Административные ссылки]] для всех вики"
