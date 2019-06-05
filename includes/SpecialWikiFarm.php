@@ -602,11 +602,11 @@ function ShowPageChanges() {
     //$out->addWikiText($str_summary);   // show summary table
     //$out->addWikiText($tables); // show requested data (recent changes)
 	if ( !empty($wikiModified) ) {
-        $out->addWikiText("\n== Modified ($wikiModifiedCounter)==\n". $wikiModified);
+        $out->addWikiText("\n== wfMessage('wikifarm_wikis_modified')->text() ($wikiModifiedCounter)==\n". $wikiModified);
     }
 	
     if ( !empty($wikiUnchanged) ) {
-        $out->addWikiText("\n== No changes ($wikiUnchangedCounter)==\n". $wikiUnchanged);
+        $out->addWikiText("\n== wfMessage('wikifarm_wikis_not_modified')->text() ($wikiUnchangedCounter)==\n". $wikiUnchanged);
     }
 	
 	//Подключаем js
